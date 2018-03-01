@@ -1,19 +1,19 @@
 package com.cy.example.demo.Controller;
 
-
+import org.springframework.security.core.Authentication;
 import com.cy.example.demo.Model.*;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashSet;
+import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
 public class HomeController {
@@ -48,10 +48,39 @@ public class HomeController {
     @RequestMapping("/listlostitem")
     public String listlostitem(Model model)
     {
-        model.addAttribute("reportitems",reportitemRepository.findAll());
-        //  model.addAttribute("users",userRepository.findAll());
-        return "listlostitem";
+        model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemStatus("lost"));
+
+        return "listitem";
     }
+
+    @RequestMapping("/listfounditem")
+    public String listfounditem(Authentication auth, Model model)
+    {
+
+        //allow users to see a list of their items that have been found
+        model.addAttribute("reportitems",reportitemRepository.findReportItemsByUsersInAndItemStatus(
+                userRepository.findAppUserByUsername(auth.getName()), "found"));
+        return "listitem";
+    }
+
+    @RequestMapping("/listlostitemadm")
+    public String listlostitemadm(Model model)
+    {
+        model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemStatus("lost"));
+
+        return "listitemadm";
+    }
+
+    @RequestMapping("/listfounditemadm")
+    public String listfounditemadm(Authentication auth, Model model)
+    {
+
+        //allow users to see a list of their items that have been found
+        model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemStatus("found"));
+        return "listitemadm";
+    }
+
+
 
     @GetMapping("/register")
     public String registerUser(Model model)
@@ -80,21 +109,42 @@ public class HomeController {
     }
 
     @RequestMapping("/addreportitem")
-    public String addpledgeditem(Model model, ReportItem reportItem)
+    public String addpreportitem(Model model, ReportItem reportItem)
     {
         model.addAttribute("users",userRepository.findAll());
         model.addAttribute("reportitem", new ReportItem());
-        return "addpledgeditem";
+        return "addreportitem";
     }
 
     @PostMapping("/addreportitem")
-    public String addreportitem(@Valid @ModelAttribute("aPledge") ReportItem reportdItem, BindingResult result)
+    public String addreportitem(@Valid @ModelAttribute("aReport") ReportItem reportItem, BindingResult result, Model model)
     {
         if(result.hasErrors())
         {
-            return "addreportditem";
+            return "addreportitem";
         }
-        reportitemRepository.save(reportdItem);
+        reportitemRepository.save(reportItem);
+        model.addAttribute("reportlist",reportitemRepository.findAll());
+        return "redirect:/";
+    }
+
+    @RequestMapping("/addreportitemadm")
+    public String addreportitemadm(Model model, ReportItem reportItem)
+    {
+        model.addAttribute("users",userRepository.findAll());
+        model.addAttribute("reportitem", new ReportItem());
+        return "addreportitemadm";
+    }
+
+    @PostMapping("/addreportitemadm")
+    public String addreportitemadm(@Valid @ModelAttribute("aReport") ReportItem reportItem, BindingResult result, Model model)
+    {
+        if(result.hasErrors())
+        {
+            return "addreportitemadm";
+        }
+        reportitemRepository.save(reportItem);
+        model.addAttribute("reportlist",reportitemRepository.findAll());
         return "redirect:/";
     }
 
@@ -102,29 +152,52 @@ public class HomeController {
     public String addusertoreport(HttpServletRequest request, Model model)
     {
         String reportid = request.getParameter("reportid");
-        model.addAttribute("newreportg", reportitemRepository.findOne(new Long(reportid)));
+        model.addAttribute("newreport", reportitemRepository.findOne(new Long(reportid)));
         model.addAttribute("users",userRepository.findAll());
 
-        return "addusertopledg";
+        return "addusertoreport";
     }
 
     @PostMapping("/savesusertoreport")
-    public String saveusertopledg(HttpServletRequest request, @ModelAttribute("newpledg") ReportItem reportItem)
+    public String saveusertopledg(HttpServletRequest request, @ModelAttribute("newreport") ReportItem reportItem)
     {
         String userid = request.getParameter("userid");
-        System.out.println("Reportid from add user to pledge:"+reportItem.getId()+" User id:"+userid);
+        System.out.println("Reportid from add user to report item:"+reportItem.getId()+" User id:"+userid);
         reportItem.addUsertoReport(userRepository.findOne(new Long(userid)));
        reportitemRepository.save(reportItem);
-        return "redirect:/listreportitem";
+        return "redirect:/listitem";
+    }
+
+    /* flip the item status between lost and found by the administrator */
+    @RequestMapping(value="/processupdstatus", params={"id"}, method=GET)
+    public String processupdstatus(@RequestParam("id") String id, Model model)
+    {
+        System.out.println("Entering processupdstatus id = " +id);
+        HashSet<ReportItem> reportItemList = reportitemRepository.findReportItemsById(Long.parseLong(id));
+        for (ReportItem reportItem: reportItemList) {
+            if (reportItem.getItemStatus() == "lost")
+            {  reportItem.setItemStatus("found"); }
+            else if (reportItem.getItemStatus() == "found")
+            {   reportItem.setItemStatus("lost"); }
+
+            reportitemRepository.save(reportItem);
+        }
+
+      /*  if (result.hasErrors()){
+            return "borrowbookform";
+        }*/
+        return "mainpage";
+        //return "redirect:/";
     }
 
 
+/*
     @GetMapping("/search")
     public String getSearch(){
         return "searchform";
     }
 
-   /*
+
     @PostMapping("/search")
     public String searchpledgeditem(HttpServletRequest request, Model model)
     {
@@ -214,4 +287,5 @@ public class HomeController {
         return "viewsuggestedjobs";
     }
     */
+
 }

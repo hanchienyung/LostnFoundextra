@@ -8,4 +8,7 @@ import java.util.List;
 public interface ReportItemRepository extends CrudRepository<ReportItem, Long> {
     HashSet<ReportItem> findReportItemsByUsersIn(AppUser appUser) ;
     HashSet<ReportItem> findReportItemsByUsers(HashSet <AppUser> users);
+    HashSet<ReportItem> findReportItemsByItemStatus(String itemstatus);
+    HashSet<ReportItem> findReportItemsByUsersInAndItemStatus(AppUser appuser, String itemstatus);
+    HashSet<ReportItem> findReportItemsById(Long id);
 }

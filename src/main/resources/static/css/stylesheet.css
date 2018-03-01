@@ -1,0 +1,54 @@
+.mainhead{
+    font-weight:bold;
+    font-size:130px;
+    background-color: #ffedf6;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 100px;
+    margin-left: 100px;
+    text-align: center;
+    font-family:'Roboto';
+}
+
+.subhead{
+    font-weight: normal;
+    font-size:50px;
+    text-align: center;
+    border: none;
+    font-family:'Roboto';
+}
+
+.reporthead{
+    font-weight:normal;
+    font-size:20px;
+    text-underline: black;
+    font-family:'Roboto';
+    text-align: center;
+}
+
+.bluetext {
+    color: #192580;
+}
+
+
+.usermsg{
+    margin-top: 100px;
+    font-weight:normal;
+    font-size:20px;
+    text-align: center;
+    font-family:'Roboto';
+}
+
+
+img{
+
+    width:100px;
+}
+
+
+
+.active {
+    background-color: deepskyblue;
+}
+
+

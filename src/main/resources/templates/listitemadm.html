@@ -1,0 +1,35 @@
+<table class="table" >
+    <tr>
+        <th>Item Name</th>
+        <th>Item Type</th>
+        <th>Item Desc</th>
+        <th>Item Status</th>
+        <th>Update Status</th>
+        <th>Report Missing Item</th>
+        <th>Add User</th>
+        <th>Reported By</th>
+
+
+
+    </tr>
+    <tr th:each="reportitem : ${reportitems}">
+        <td data-th="Item Name" th:text="${reportitem.itemName}"></td>
+        <td data-th="Item Type" th:text="${reportitem.itemType}"></td>
+        <td data-th="Item Description" th:text="${reportitem.itemDesc}"></td>
+        <td data-th="Item Status" th:text="${reportitem.itemStatus}" ></td>
+        <td><a th:href="@{/processupdstatus(id=${reportitem.id})}">Update Status</a></td>
+
+
+        <form th:action="@{/addusertoreport}" th:method="post">
+            <td><button class="btn btn-default" name="reportid" th:value="${reportitem.id}">Add User</button></td>
+        </form>
+
+        <td th:if="${reportitem.users}!=null">
+                <span th:each = "eachUser:${reportitem.users}">
+                    <button class="btn btn-sm btn-close" th:text="${eachUser.username}"></button>
+                </span>
+
+        </td>
+    </tr>
+
+</table>

@@ -82,7 +82,7 @@ public class DataLoader implements CommandLineRunner {
         reportitem3.setItemName("dog");
         reportitem3.setItemType("pet");
         reportitem3.setItemDesc("small white poodle");
-        reportitem3.setItemStatus("lost");
+        reportitem3.setItemStatus("found");
         reportitem3.setImage("https://i.pinimg.com/736x/5b/b5/47/5bb547089cc71e6da7441dde70592dc9--poodle-mix-poodle-cuts.jpg");
         reportitem3.addUsertoReport(appuserRepository.findAppUserByUsername("williamsr"));
         reportItemRepository.save(reportitem3);
@@ -94,7 +94,7 @@ public class DataLoader implements CommandLineRunner {
         reportitem4.setItemName("watch");
         reportitem4.setItemType("other");
         reportitem4.setItemDesc("gold Rolex");
-        reportitem4.setItemStatus("lost");
+        reportitem4.setItemStatus("found");
         reportitem4.addUsertoReport(appuserRepository.findAppUserByUsername("blackl"));
         reportItemRepository.save(reportitem4);
 

@@ -39,9 +39,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
 
-                .antMatchers("/","/h2-console/**","images/**","/register","/listlostitem", "/assets/**","/css/**").permitAll()
+                .antMatchers("/","/h2-console/**","images/**","/register","/listlostitem", "/assets/**","/css/**","/addreportitem").permitAll()
 
-                .antMatchers("/addreportitem", "/listfounditems").access("hasAuthority('USER, ADMIN')")
+                .antMatchers( "/listfounditems").access("hasAuthority('USER, ADMIN')")
 
 //                .access("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
                 .antMatchers("/admin", "/chgitemstatus/**","addusertoreport","savdusertoreport").access("hasAuthority('ADMIN')")
