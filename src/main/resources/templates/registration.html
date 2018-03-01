@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Potluck Registration Page</title>
+    <link rel="stylesheet" href="/css/stylesheet.css">
+</head>
+<body>
+<div class="body-content">
+    <div class="col-sm">
+        <h1>Create user registration</h1>
+        <form class="form" action="#" th:action="@{/register}"th:object="${user}" method="post" enctype="multipart/form-data" autocomplete="off">
+            <div class="alert alert-error"></div>
+
+            <label>User Name:</label>
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">User Name Error</span>
+            <input type="text" placeholder="User Name" th:field="*{username}" name="username" required />
+            <br/>
+            <label>Email:</label>
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+            <input type="email" placeholder="Email" th:field="*{email}" name="email" required />
+            <br/>
+            <label>Password:</label>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
+            <input type="password" placeholder="password" th:field="*{password}" name="password" autocomplete="new-password" required />
+            <br/>
+            <label>First Name:</label>
+            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
+            <input type="text" placeholder="First Name" th:field="*{firstName}" name="firstName" required />
+            <br/>
+
+            <label>Last Name:</label>
+            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
+            <input type="text" placeholder="Last Name" th:field="*{lastName}" name="lastName" required />
+            <br/>
+
+            <input type="submit" value="Register" name="register" class="btn btn-block btn-primary" />
+        </form>
+    </div>
+</div>
+<span th:replace="fragment :: bootstrap4js"></span>
+</body>
+</html>
