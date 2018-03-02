@@ -27,29 +27,9 @@
           <div th:each = "eachUser:${reportitem.users}">
                <div th:text="${eachUser.username}"></div>
           </div>
-
         </td>
-
-      <!--  <span th:each = "eachUser:${reportitem.users}">
-                    <button class="btn btn-sm btn-close" th:text="${eachUser.username}"></button>
-                </span>
-                -->
-
-        <!--
-        <form th:action="@{/addusertoreport}" th:method="post">
-            <td><button class="btn btn-default" name="reportid" th:value="${reportitem.id}">Add User</button></td>
-        </form>
-
-        <td th:if="${reportitem.users}!=null">
-                <span th:each = "eachUser:${reportitem.users}">
-                    <button class="btn btn-sm btn-close" th:text="${eachUser.username}"></button>
-                </span>
-
-        </td>-->
     </tr>
-
 </table>
-
 
 <section>
     <span th:replace="fragment::bootstrap4js"></span>

@@ -20,21 +20,29 @@
             <span th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}"></span>
             <input type="text" placeholder="Item" class="form-control" th:field="*{itemName}">
 
-            <label >Item Type</label>
+            <label >Item Type:</label>
             <span th:if="${#fields.hasErrors('itemType')}" th:errors="*{itemType}"></span>
-            <input type="text" placeholder="Item Type" class="form-control" th:field="*{itemType}">
+            <select th:field="*{itemType}">
+                <option value="Clothes">Clothes</option>
+                <option value="Pets">Pets</option>
+                <option value="Other">Other</option>
+            </select>
+
 
             <label >Item Description</label>
             <span th:if="${#fields.hasErrors('itemDesc')}" th:errors="*{itemDesc}"></span>
             <input type="text" placeholder="Item Description" class="form-control" th:field="*{itemDesc}">
 
-            <label >Item Status</label>
+            <label >Item Status:</label>
             <span th:if="${#fields.hasErrors('itemStatus')}" th:errors="*{itemStatus}"></span>
-            <input type="text" placeholder="Item Status" class="form-control" th:field="*{itemStatus}">
+            <select th:field="*{itemStatus}">
+                  <option value="Lost">Lost</option>
+            </select>
 
             <label >Item Image</label>
             <span th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
             <input type="text" placeholder="Item Image" class="form-control" th:field="*{image}">
+
 
             <div class="form-group">
                 <label th:for="type">Users</label>

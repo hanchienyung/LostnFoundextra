@@ -25,34 +25,25 @@
                 <a class="nav-link " href="/listlostitem">View Lost Items</a>
             </li>
 
-           <!-- <li class="nav-item" sec:authorize="hasAuthority('USER') or hasAuthority('ADMIN')" >-->
-            <li class="nav-item"  >
+            <li class="nav-item" sec:authorize="hasAuthority('USER')" >
                 <a class="nav-link " href="/listfounditem">View Found Items</a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link " href="/listlostitemadm">View Lost Items Adm</a>
+            <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                <a class="nav-link " href="/listlostitemadm">View Lost Items (ADM)</a>
             </li>
 
-            <!-- <li class="nav-item" sec:authorize="hasAuthority('USER') or hasAuthority('ADMIN')" >-->
-            <li class="nav-item"  >
-                <a class="nav-link " href="/listfounditemadm">View Found Items Adm</a>
+            <li class="nav-item" sec:authorize="hasAuthority('ADMIN')" >
+                <a class="nav-link " href="/listfounditemadm">View Found Items</a>
             </li>
 
-            <!--<li class="nav-item" sec:authorize="hasAuthority('USER') or hasAnyAuthority('ADMIN')">-->
-            <li class="nav-item" >
+            <li class="nav-item" sec:authorize="hasAuthority('USER')">
                 <a class="nav-link " href="/addreportitem">Report Lost Item</a>
 
             </li>
 
-            <li class="nav-item" >
-                <a class="nav-link " href="/addreportitemadm">Report Lost Item Adm</a>
-
-            </li>
-
             <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
-            <!--<li class="nav-item" > -->
-                <a class="nav-link" href="/changeitemstatus">Change Item Status</a>
+                <a class="nav-link " href="/addreportitemadm">Report Lost Item</a>
             </li>
 
             <li class="nav-item">

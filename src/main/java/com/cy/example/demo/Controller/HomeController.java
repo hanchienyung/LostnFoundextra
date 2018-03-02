@@ -35,21 +35,18 @@ public class HomeController {
     public String login(Model model)
     {
         return "login";
-
     }
 
     @RequestMapping("/logout")
     public String logout(Model model)
     {
         return "mainpage";
-
     }
 
     @RequestMapping("/listlostitem")
     public String listlostitem(Model model)
     {
         model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemStatus("lost"));
-
         return "listitem";
     }
 
@@ -67,14 +64,12 @@ public class HomeController {
     public String listlostitemadm(Model model)
     {
         model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemStatus("lost"));
-
         return "listitemadm";
     }
 
     @RequestMapping("/listfounditemadm")
     public String listfounditemadm(Authentication auth, Model model)
     {
-
         //allow users to see a list of their items that have been found
         model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemStatus("found"));
         return "listitemadm";
@@ -103,34 +98,25 @@ public class HomeController {
             user.addRole(roleRepository.findAppRoleByRoleName("USER"));
         userRepository.save(user);
         return "redirect:/login";
-
-       // userRepository.save(user);
-       // return "redirect:/";
     }
 
     @RequestMapping("/addreportitem")
     public String addreportitem(Model model, Authentication auth)
     {
         ReportItem reportItem  = new ReportItem();
-        System.out.println ("addreportitem (request) = reportItem id / Name = " +  reportItem.getId() + " / " + reportItem.getItemName());
+        //System.out.println ("addreportitem (request) = reportItem id / Name = " +  reportItem.getId() + " / " + reportItem.getItemName());
         reportitemRepository.save(reportItem);
 
-        System.out.println("addreportitem getname = " + auth.getName());
-        //reportItem.addUsertoReport(userRepository.findAppUserByUsername(auth.getName()));
-       // model.addAttribute("users",userRepository.findAll());
-        // model.addAttribute("reportitem", new ReportItem());
+        //System.out.println("addreportitem getname = " + auth.getName());
         model.addAttribute("reportitem", reportItem);
-     //   AppUser appuser = userRepository.findAppUserByUsername(auth.getName());
         model.addAttribute("users",userRepository.findAppUserByUsername(auth.getName()));
-
         return "addreportitem";
     }
 
     @PostMapping("/addreportitem")
     public String addreportitem(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
-  //  public String addreportitem(@Valid @ModelAttribute("reportitem") ReportItem reportItem, BindingResult result, Model model, Authentication auth)
     {
-        System.out.println ("addreportitem (post) = reportItem id / Name = " +  reportItem.getId() + " / " + reportItem.getItemName());
+        //System.out.println ("addreportitem (post) = reportItem id / Name = " +  reportItem.getId() + " / " + reportItem.getItemName());
         if(result.hasErrors())
         {
             return "addusertoreport";
@@ -140,32 +126,26 @@ public class HomeController {
         reportItem.addUsertoReport(appuser);
 
         reportItem.setItemStatus("lost");
-        //reportItem.addUsertoReport(userRepository.findAppUserByUsername(auth.getName()));
         reportitemRepository.save(reportItem);
         model.addAttribute("reportlist",reportitemRepository.findAll());
-        //model.addAttribute("reportid", reportItem.getId());
 
         return "redirect:/";
-       // return "redirect:/addusertoreport";
     }
 
     @RequestMapping("/addreportitemadm")
     public String addreportitemadm(HttpServletRequest request, Model model)
     {
-       // String reportid = request.getParameter("reportid");
         ReportItem reportItem  = new ReportItem();
         reportitemRepository.save(reportItem);
 
-     //   model.addAttribute("reportitem", reportitemRepository.findOne(new Long(reportid)));
         model.addAttribute("reportitem", reportItem);
         model.addAttribute("users",userRepository.findAll());
-        //model.addAttribute("reportitem", new ReportItem());
+
         return "addreportitemadm";
     }
 
     @PostMapping("/addreportitemadm")
     public String addreportitemadm(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
-    // public String addreportitemadm(HttpServletRequest request,@Valid @ModelAttribute("aReport") ReportItem reportItem, BindingResult result, Model model)
     {
         if(result.hasErrors())
         {
@@ -186,7 +166,7 @@ public class HomeController {
     {
        String reportid = request.getParameter("reportid");
 
-        System.out.println ("addusertoreport = reportid = " +  reportid);
+        //System.out.println ("addusertoreport = reportid = " +  reportid);
         model.addAttribute("reportitem", reportitemRepository.findOne(new Long(reportid)));
         model.addAttribute("users",userRepository.findAll());
 
@@ -197,9 +177,8 @@ public class HomeController {
     public String saveusertoreport(HttpServletRequest request, @ModelAttribute("reportitem") ReportItem reportItem)
     {
         String userid = request.getParameter("userid");
-        System.out.println("Reportid from add user to report item:"+reportItem.getId()+" User name:"+userid);
+        //System.out.println("Reportid from add user to report item:"+reportItem.getId()+" User name:"+userid);
         reportItem.addUsertoReport(userRepository.findOne(new Long(userid)));
-      //  reportItem.addUsertoReport(userRepository.findAppUserByUsername(username));
         reportitemRepository.save(reportItem);
         return "redirect:/";
     }
@@ -208,7 +187,7 @@ public class HomeController {
     @RequestMapping(value="/processupdstatus", params={"id"}, method=GET)
     public String processupdstatus(@RequestParam("id") String id, Model model)
     {
-        System.out.println("Entering processupdstatus id = " +id);
+        //System.out.println("Entering processupdstatus id = " +id);
         HashSet<ReportItem> reportItemList = reportitemRepository.findReportItemsById(Long.parseLong(id));
         for (ReportItem reportItem: reportItemList) {
             if (reportItem.getItemStatus() == "lost")
@@ -218,12 +197,7 @@ public class HomeController {
 
             reportitemRepository.save(reportItem);
         }
-
-      /*  if (result.hasErrors()){
-            return "borrowbookform";
-        }*/
         return "mainpage";
-        //return "redirect:/";
     }
 
 
@@ -260,68 +234,6 @@ public class HomeController {
 //
         return "searchproductlist";
     }
-
-
-    /*
-
-    @PostMapping("/update/pledgeditem")
-    public String updateJob(HttpServletRequest request, Model model)
-    {
-        model.addAttribute("newjob",jobRepository.findOne(new Long(request.getParameter("id"))));
-        return "addjob";
-    }
-
-
-    @RequestMapping("/listjobs")
-    public String listJobs(Model model)
-    {
-        model.addAttribute("joblist",jobRepository.findAll());
-        return "listjobs";
-    }
-
-    @PostMapping("/addskilltojob")
-    public String showSkillsForJob(HttpServletRequest request, Model model)
-    {
-        String jobid = request.getParameter("jobid");
-        model.addAttribute("newjob",jobRepository.findOne(new Long(jobid)));
-
-        //Make skills disappear from add form when they are already included (Set already makes it impossible to add multiple)
-        model.addAttribute("skillList",skillRepository.findAll());
-
-        return "addskilltojob";
-    }
-
-    @PostMapping("/saveskilltojob")
-    public String addSkilltoJob(HttpServletRequest request, @ModelAttribute("newjob") AppJob job)
-    {
-        String skillid = request.getParameter("skillid");
-        System.out.println("Job id from add skill to job:"+job.getId()+" Skill id:"+skillid);
-        job.addSkilltoJob(skillRepository.findOne(new Long(skillid)));
-        jobRepository.save(job);
-        return "redirect:/listjobs";
-    }
-
-    @PostMapping("/viewjobskills")
-    public String viewJobSkills(HttpServletRequest request, Model model)
-    {
-        String jobid = request.getParameter("jobid");
-        AppJob job = jobRepository.findOne(new Long(jobid));
-        if(job.getJobSkills().size()<1)
-            return "redirect:/listjobs";
-        model.addAttribute("newjob",job);
-        return "viewjobskills";
-    }
-
-    @RequestMapping("/getMyJobs")
-    public String getJobsThatApply(Authentication auth, Model model)
-    {
-        HashSet <Skill> mySkills = new HashSet(userRepository.findAppUserByUsername(auth.getName()).getMySkills());
-        HashSet <AppJob> matchingJobs = jobRepository.findAppJobsByJobSkillsIn(mySkills);
-
-        System.out.println(matchingJobs.toString());
-        model.addAttribute("joblist",matchingJobs);
-        return "viewsuggestedjobs";
-    }
-    */
+*/
 
 }
