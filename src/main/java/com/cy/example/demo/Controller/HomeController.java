@@ -109,22 +109,27 @@ public class HomeController {
     }
 
     @RequestMapping("/addreportitem")
-    public String addpreportitem(Model model, ReportItem reportItem)
+    public String addpreportitem(Model model)
     {
+        ReportItem reportItem  = new ReportItem();
+        reportitemRepository.save(reportItem);
+
         model.addAttribute("users",userRepository.findAll());
         model.addAttribute("reportitem", new ReportItem());
         return "addreportitem";
     }
 
     @PostMapping("/addreportitem")
-    public String addreportitem(@Valid @ModelAttribute("aReport") ReportItem reportItem, BindingResult result, Model model)
+    public String addreportitem(@Valid @ModelAttribute("aReport") ReportItem reportItem, BindingResult result, Model model, Authentication auth)
     {
         if(result.hasErrors())
         {
             return "addreportitem";
         }
+        reportItem.setItemStatus("lost");
+
         reportitemRepository.save(reportItem);
-        model.addAttribute("reportlist",reportitemRepository.findAll());
+       // model.addAttribute("reportlist",reportitemRepository.findAll());
         return "redirect:/";
     }
 
@@ -161,10 +166,11 @@ public class HomeController {
     @PostMapping("/savesusertoreport")
     public String saveusertopledg(HttpServletRequest request, @ModelAttribute("newreport") ReportItem reportItem)
     {
-        String userid = request.getParameter("userid");
-        System.out.println("Reportid from add user to report item:"+reportItem.getId()+" User id:"+userid);
-        reportItem.addUsertoReport(userRepository.findOne(new Long(userid)));
-       reportitemRepository.save(reportItem);
+        String username = request.getParameter("username");
+        System.out.println("Reportid from add user to report item:"+reportItem.getId()+" User name:"+username);
+      //  reportItem.addUsertoReport(userRepository.findOne(new Long(userid)));
+        reportItem.addUsertoReport(userRepository.findAppUserByUsername(username));
+        reportitemRepository.save(reportItem);
         return "redirect:/listitem";
     }
 

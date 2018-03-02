@@ -6,7 +6,7 @@
     <title>Add Users to Report item</title>
 </head>
 <body>
-<form th:action="@{/savesusertoreport}" th:object="${newpreport}" method="post">
+<form th:action="@{/savesusertoreport}" th:object="${newreport}" method="post">
     <input type="hidden" th:field="*{id}">
     <input type="hidden" th:field="*{itemName}">
     <input type="text" th:field="*{itemType}">
