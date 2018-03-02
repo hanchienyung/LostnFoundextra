@@ -109,69 +109,99 @@ public class HomeController {
     }
 
     @RequestMapping("/addreportitem")
-    public String addpreportitem(Model model)
+    public String addreportitem(Model model, Authentication auth)
     {
         ReportItem reportItem  = new ReportItem();
+        System.out.println ("addreportitem (request) = reportItem id / Name = " +  reportItem.getId() + " / " + reportItem.getItemName());
         reportitemRepository.save(reportItem);
 
-        model.addAttribute("users",userRepository.findAll());
-        model.addAttribute("reportitem", new ReportItem());
+        System.out.println("addreportitem getname = " + auth.getName());
+        //reportItem.addUsertoReport(userRepository.findAppUserByUsername(auth.getName()));
+       // model.addAttribute("users",userRepository.findAll());
+        // model.addAttribute("reportitem", new ReportItem());
+        model.addAttribute("reportitem", reportItem);
+     //   AppUser appuser = userRepository.findAppUserByUsername(auth.getName());
+        model.addAttribute("users",userRepository.findAppUserByUsername(auth.getName()));
+
         return "addreportitem";
     }
 
     @PostMapping("/addreportitem")
-    public String addreportitem(@Valid @ModelAttribute("aReport") ReportItem reportItem, BindingResult result, Model model, Authentication auth)
+    public String addreportitem(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
+  //  public String addreportitem(@Valid @ModelAttribute("reportitem") ReportItem reportItem, BindingResult result, Model model, Authentication auth)
     {
+        System.out.println ("addreportitem (post) = reportItem id / Name = " +  reportItem.getId() + " / " + reportItem.getItemName());
         if(result.hasErrors())
         {
-            return "addreportitem";
+            return "addusertoreport";
         }
-        reportItem.setItemStatus("lost");
+        String userid = request.getParameter("userid");
+        AppUser appuser = userRepository.findOne(new Long(userid));
+        reportItem.addUsertoReport(appuser);
 
+        reportItem.setItemStatus("lost");
+        //reportItem.addUsertoReport(userRepository.findAppUserByUsername(auth.getName()));
         reportitemRepository.save(reportItem);
-       // model.addAttribute("reportlist",reportitemRepository.findAll());
+        model.addAttribute("reportlist",reportitemRepository.findAll());
+        //model.addAttribute("reportid", reportItem.getId());
+
         return "redirect:/";
+       // return "redirect:/addusertoreport";
     }
 
     @RequestMapping("/addreportitemadm")
-    public String addreportitemadm(Model model, ReportItem reportItem)
+    public String addreportitemadm(HttpServletRequest request, Model model)
     {
+       // String reportid = request.getParameter("reportid");
+        ReportItem reportItem  = new ReportItem();
+        reportitemRepository.save(reportItem);
+
+     //   model.addAttribute("reportitem", reportitemRepository.findOne(new Long(reportid)));
+        model.addAttribute("reportitem", reportItem);
         model.addAttribute("users",userRepository.findAll());
-        model.addAttribute("reportitem", new ReportItem());
+        //model.addAttribute("reportitem", new ReportItem());
         return "addreportitemadm";
     }
 
     @PostMapping("/addreportitemadm")
-    public String addreportitemadm(@Valid @ModelAttribute("aReport") ReportItem reportItem, BindingResult result, Model model)
+    public String addreportitemadm(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
+    // public String addreportitemadm(HttpServletRequest request,@Valid @ModelAttribute("aReport") ReportItem reportItem, BindingResult result, Model model)
     {
         if(result.hasErrors())
         {
             return "addreportitemadm";
         }
+
+        String userid = request.getParameter("userid");
+        AppUser appuser = userRepository.findOne(new Long(userid));
+        reportItem.addUsertoReport(appuser);
+
         reportitemRepository.save(reportItem);
         model.addAttribute("reportlist",reportitemRepository.findAll());
         return "redirect:/";
     }
 
     @RequestMapping("/addusertoreport")
-    public String addusertoreport(HttpServletRequest request, Model model)
+    public String addusertoreport(HttpServletRequest request, Model model) //, @ModelAttribute("reportid")String reportid)
     {
-        String reportid = request.getParameter("reportid");
-        model.addAttribute("newreport", reportitemRepository.findOne(new Long(reportid)));
+       String reportid = request.getParameter("reportid");
+
+        System.out.println ("addusertoreport = reportid = " +  reportid);
+        model.addAttribute("reportitem", reportitemRepository.findOne(new Long(reportid)));
         model.addAttribute("users",userRepository.findAll());
 
         return "addusertoreport";
     }
 
-    @PostMapping("/savesusertoreport")
-    public String saveusertopledg(HttpServletRequest request, @ModelAttribute("newreport") ReportItem reportItem)
+    @PostMapping("/saveusertoreport")
+    public String saveusertoreport(HttpServletRequest request, @ModelAttribute("reportitem") ReportItem reportItem)
     {
-        String username = request.getParameter("username");
-        System.out.println("Reportid from add user to report item:"+reportItem.getId()+" User name:"+username);
-      //  reportItem.addUsertoReport(userRepository.findOne(new Long(userid)));
-        reportItem.addUsertoReport(userRepository.findAppUserByUsername(username));
+        String userid = request.getParameter("userid");
+        System.out.println("Reportid from add user to report item:"+reportItem.getId()+" User name:"+userid);
+        reportItem.addUsertoReport(userRepository.findOne(new Long(userid)));
+      //  reportItem.addUsertoReport(userRepository.findAppUserByUsername(username));
         reportitemRepository.save(reportItem);
-        return "redirect:/listitem";
+        return "redirect:/";
     }
 
     /* flip the item status between lost and found by the administrator */
