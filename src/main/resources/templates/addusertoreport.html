@@ -6,19 +6,26 @@
     <title>Add Users to Report item</title>
 </head>
 <body>
-<form th:action="@{/savesusertoreport}" th:object="${newreport}" method="post">
+<form th:action="@{/saveusertoreport}" th:object="${reportitem}" method="post">
     <input type="hidden" th:field="*{id}">
-    <input type="hidden" th:field="*{itemName}">
+    <input type="text" th:field="*{itemName}">
     <input type="text" th:field="*{itemType}">
     <input type="text" th:field="*{itemDesc}">
     <input type="text" th:field="*{itemStatus}">
     <input type="text" th:field="*{image}">
     <input type="text" th:field="*{users}">
+
+   <!-- <select name="userid">
+        <option th:each="user:${users}" th:value="${user.id}" th:text="${user.username}" selected="selected"></option>
+    </select>
+    -->
+
     <div th:each="eachUser:${users}">
         <button class="btn btn-default" type="submit" name="userid" th:value="${eachUser.id}" th:text="${eachUser.username}"></button>
     </div>
 
     <input type="submit" value="Add">
+
 </form>
 </body>
 </html>

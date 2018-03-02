@@ -1,20 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<th:block th:replace="fragment::top"></th:block>
+<head>
+    <div th:replace="fragment :: top"></div>
+    <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+
 <table class="table" >
     <tr>
         <th>Item Name</th>
+        <th>Item Image</th>
         <th>Item Type</th>
         <th>Item Desc</th>
         <th>Item Status</th>
-        <th>Add User</th>
         <th>Reported By</th>
-
-
     </tr>
     <tr th:each="reportitem : ${reportitems}">
         <td data-th="Item Name" th:text="${reportitem.itemName}"></td>
+        <td><img th:src="(${reportitem.image}==null)?'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png':${reportitem.image}"/></td>
         <td data-th="Item Type" th:text="${reportitem.itemType}"></td>
         <td data-th="Item Description" th:text="${reportitem.itemDesc}"></td>
         <td data-th="Item Status" th:text="${reportitem.itemStatus}"></td>
 
+        <td th:if="${reportitem.users}!=null">
+          <div th:each = "eachUser:${reportitem.users}">
+               <div th:text="${eachUser.username}"></div>
+          </div>
+
+        </td>
+
+      <!--  <span th:each = "eachUser:${reportitem.users}">
+                    <button class="btn btn-sm btn-close" th:text="${eachUser.username}"></button>
+                </span>
+                -->
+
+        <!--
         <form th:action="@{/addusertoreport}" th:method="post">
             <td><button class="btn btn-default" name="reportid" th:value="${reportitem.id}">Add User</button></td>
         </form>
@@ -24,7 +45,7 @@
                     <button class="btn btn-sm btn-close" th:text="${eachUser.username}"></button>
                 </span>
 
-        </td>
+        </td>-->
     </tr>
 
 </table>

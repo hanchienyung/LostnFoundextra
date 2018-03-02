@@ -1,11 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<th:block th:replace="fragment::top"></th:block>
+<head>
+    <div th:replace="fragment :: top"></div>
+    <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
 <table class="table" >
     <tr>
         <th>Item Name</th>
+        <th>Item Image</th>
         <th>Item Type</th>
         <th>Item Desc</th>
         <th>Item Status</th>
         <th>Update Status</th>
-        <th>Report Missing Item</th>
         <th>Add User</th>
         <th>Reported By</th>
 
@@ -14,6 +22,7 @@
     </tr>
     <tr th:each="reportitem : ${reportitems}">
         <td data-th="Item Name" th:text="${reportitem.itemName}"></td>
+        <td><img th:src="(${reportitem.image}==null)?'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png':${reportitem.image}"/></td>
         <td data-th="Item Type" th:text="${reportitem.itemType}"></td>
         <td data-th="Item Description" th:text="${reportitem.itemDesc}"></td>
         <td data-th="Item Status" th:text="${reportitem.itemStatus}" ></td>
@@ -33,3 +42,8 @@
     </tr>
 
 </table>
+<section>
+    <span th:replace="fragment::bootstrap4js"></span>
+</section>
+</body>
+</html>

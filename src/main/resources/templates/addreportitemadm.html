@@ -38,7 +38,7 @@
 
             <div class="form-group">
                 <label th:for="type">Users</label>
-                <select name="username" id="user" class="selectpicker" multiple="multiple">
+                <select name="userid" id="user" class="selectpicker" multiple="multiple">
                     <option th:each="reportuser : ${users}"
                             th:value="${reportuser.id}" th:inline="text"> [[${reportuser.username}]]</option>
                 </select>
