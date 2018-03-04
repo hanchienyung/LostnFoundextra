@@ -245,12 +245,30 @@ public class HomeController {
 
         String searchString1 = request.getParameter("itemtype");
         String searchString2 = request.getParameter("itemname");
-        System.out.println("searchString1 is " + searchString1);
-        System.out.println("searchString2 is " + searchString2);
+       // System.out.println("searchString1 is " + searchString1);
+       // System.out.println("searchString2 is " + searchString2);
         model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemTypeAndItemName(searchString1, searchString2));
         return "listitem";
     }
 
+    @RequestMapping("/displayclothes")
+    public String displayclothes(Model model)
+    {
+        model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemTypeAndItemStatus("Clothes", "lost"));
+        return "listitem";
+    }
+    @RequestMapping("/displaypets")
+    public String displaypets(Model model)
+    {
+        model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemTypeAndItemStatus("Pets", "lost"));
+        return "listitem";
+    }
+    @RequestMapping("/displayother")
+    public String displayother(Model model)
+    {
+        model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemTypeAndItemStatus("Other", "lost"));
+        return "listitem";
+    }
 
 
 }

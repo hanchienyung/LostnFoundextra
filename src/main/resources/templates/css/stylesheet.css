@@ -40,11 +40,25 @@
 }
 
 
-img{
-
-    width:50px;
+.clothesimg{
+    width:200px;
+    height: 250px;
 }
 
+.petsimg{
+    width:300px;
+    height: 350px;
+ }
+
+.otherimg{
+    width:300px;
+    height:300px;
+}
+
+
+img {
+     width:50px;
+}
 
 
 .active {
