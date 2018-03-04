@@ -115,7 +115,6 @@ public class HomeController {
     }
 
     @PostMapping("/addreportitem")
-   // public String addreportitem(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
     public String addreportitem(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, BindingResult result, Model model)
     {
         //System.out.println ("addreportitem (post) = reportItem id / Name = " +  reportItem.getId() + " / " + reportItem.getItemName());
@@ -135,7 +134,6 @@ public class HomeController {
     }
 
     @RequestMapping("/addreportitemadm")
-    //public String addreportitemadm(HttpServletRequest request, Model model)
     public String addreportitemadm(Model model)
     {
         ReportItem reportItem  = new ReportItem();
@@ -148,7 +146,6 @@ public class HomeController {
     }
 
     @PostMapping("/addreportitemadm")
-    //public String addreportitemadm(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
     public String addreportitemadm(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
     {
         if(result.hasErrors())
