@@ -3,7 +3,9 @@
 <th:block th:replace="fragment::top"></th:block>
 <head>
     <div th:replace="fragment :: top"></div>
+    <title>Report a lost item</title>
     <link rel="stylesheet" href="/css/index.css">
+
 </head>
 <body>
 
@@ -27,18 +29,18 @@
                 <option value="Pets">Pets</option>
                 <option value="Other">Other</option>
             </select>
-
+            <br />
 
             <label >Item Description</label>
             <span th:if="${#fields.hasErrors('itemDesc')}" th:errors="*{itemDesc}"></span>
             <input type="text" placeholder="Item Description" class="form-control" th:field="*{itemDesc}">
-
+            <br />
             <label >Item Status:</label>
             <span th:if="${#fields.hasErrors('itemStatus')}" th:errors="*{itemStatus}"></span>
             <select th:field="*{itemStatus}">
                   <option value="Lost">Lost</option>
             </select>
-
+            <br />
             <label >Item Image</label>
             <span th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
             <input type="text" placeholder="Item Image" class="form-control" th:field="*{image}">

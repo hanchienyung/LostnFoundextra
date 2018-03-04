@@ -25,6 +25,10 @@
                 <a class="nav-link " href="/listlostitem">View Lost Items</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link " href="/addlostitem">Add Lost Items</a>
+            </li>
+
             <li class="nav-item" sec:authorize="hasAuthority('USER')" >
                 <a class="nav-link " href="/listfounditem">View Found Items</a>
             </li>
@@ -44,6 +48,11 @@
 
             <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                 <a class="nav-link " href="/addreportitemadm">Report Lost Item</a>
+            </li>
+
+            <li class="nav-item" sec:authorize="hasAuthority('USER') or hasAuthority('ADMIN')">
+                <a class="nav-link " href="/searchitem">Search Item</a>
+
             </li>
 
             <li class="nav-item">

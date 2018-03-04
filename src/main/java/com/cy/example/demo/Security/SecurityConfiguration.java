@@ -35,14 +35,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     //    HttpSecurity: tells us which routes people are allowed to acesses includes methods to restict or alllow access
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http
+
                 .authorizeRequests()
-
-
-                .antMatchers("/","/h2-console/**","images/**","/register","/listlostitem", "/assets/**","/css/**").permitAll()
-
-                .antMatchers( "/listfounditem", "/addreportitem").access("hasAuthority('USER') or  hasAuthority('ADMIN')")
-
+                .antMatchers("/","/h2-console/**","/images/**","/register","/listlostitem", "/addlostitem", "/assets/**","/css/**").permitAll()
+                .antMatchers( "/listfounditem", "/addreportitem", "/searchitem").access("hasAuthority('USER') or  hasAuthority('ADMIN')")
                 .antMatchers("/listfounditemadm", "/listlostitemadm", "addreportitemadm", "/processupdstatus/**","addusertoreport","savdusertoreport").access("hasAuthority('ADMIN')")
 
                 .anyRequest().authenticated()

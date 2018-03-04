@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Search Item</title>
+</head>
+<body>
+<div class="body-content">
+  <div class="col-sm">
+    <form action="#"
+      th:action="@{/searchitem}"
+      method="post">
+
+     Search by: <br />
+
+      <!-- Item Category: -->
+        <select input type="text"   name="itemtype">
+            <option value="Clothes">Clothes</option>
+            <option value="Pets">Pets</option>
+            <option value="Other">Other</option>
+        </select>
+
+
+       <br />
+       Item Name:  <input type="text" name="itemname" />
+
+    <br />
+    <input type="submit" value="Submit" />
+   </form>
+  </div>
+</div>
+</body>
+</html>

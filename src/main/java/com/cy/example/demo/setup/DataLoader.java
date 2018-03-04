@@ -56,7 +56,7 @@ public class DataLoader implements CommandLineRunner {
 
         ReportItem reportitem1 = new ReportItem();
         reportitem1.setItemName("dress");
-        reportitem1.setItemType("clothes");
+        reportitem1.setItemType("Clothes");
         reportitem1.setItemDesc("red flared");
         reportitem1.setItemStatus("lost");
         reportitem1.setImage("https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/8/_102183868.jpg?crop=pad&pad_color=FFF&format=jpeg&w=489&h=750&quality=70");
@@ -68,7 +68,7 @@ public class DataLoader implements CommandLineRunner {
 
         ReportItem reportitem2 = new ReportItem();
         reportitem2.setItemName("shorts");
-        reportitem2.setItemType("clothes");
+        reportitem2.setItemType("Clothes");
         reportitem2.setItemDesc("sweat blue");
         reportitem2.setItemStatus("lost");
         reportitem2.addUsertoReport(appuserRepository.findAppUserByUsername("smithm"));
@@ -80,7 +80,7 @@ public class DataLoader implements CommandLineRunner {
 
         ReportItem reportitem3 = new ReportItem();
         reportitem3.setItemName("dog");
-        reportitem3.setItemType("pet");
+        reportitem3.setItemType("Pets");
         reportitem3.setItemDesc("small white poodle");
         reportitem3.setItemStatus("found");
         reportitem3.setImage("https://i.pinimg.com/736x/5b/b5/47/5bb547089cc71e6da7441dde70592dc9--poodle-mix-poodle-cuts.jpg");
@@ -92,7 +92,7 @@ public class DataLoader implements CommandLineRunner {
 
         ReportItem reportitem4 = new ReportItem();
         reportitem4.setItemName("watch");
-        reportitem4.setItemType("other");
+        reportitem4.setItemType("Other");
         reportitem4.setItemDesc("gold Rolex");
         reportitem4.setItemStatus("found");
         reportitem4.addUsertoReport(appuserRepository.findAppUserByUsername("blackl"));

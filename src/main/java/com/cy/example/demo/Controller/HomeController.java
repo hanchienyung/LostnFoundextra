@@ -68,7 +68,8 @@ public class HomeController {
     }
 
     @RequestMapping("/listfounditemadm")
-    public String listfounditemadm(Authentication auth, Model model)
+    //public String listfounditemadm(Authentication auth, Model model)
+    public String listfounditemadm(Model model)
     {
         //allow users to see a list of their items that have been found
         model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemStatus("found"));
@@ -114,7 +115,8 @@ public class HomeController {
     }
 
     @PostMapping("/addreportitem")
-    public String addreportitem(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
+   // public String addreportitem(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
+    public String addreportitem(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, BindingResult result, Model model)
     {
         //System.out.println ("addreportitem (post) = reportItem id / Name = " +  reportItem.getId() + " / " + reportItem.getItemName());
         if(result.hasErrors())
@@ -133,7 +135,8 @@ public class HomeController {
     }
 
     @RequestMapping("/addreportitemadm")
-    public String addreportitemadm(HttpServletRequest request, Model model)
+    //public String addreportitemadm(HttpServletRequest request, Model model)
+    public String addreportitemadm(Model model)
     {
         ReportItem reportItem  = new ReportItem();
         reportitemRepository.save(reportItem);
@@ -145,6 +148,7 @@ public class HomeController {
     }
 
     @PostMapping("/addreportitemadm")
+    //public String addreportitemadm(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
     public String addreportitemadm(HttpServletRequest request,@Valid @ModelAttribute("reportitem") ReportItem reportItem, Authentication auth, BindingResult result, Model model)
     {
         if(result.hasErrors())
@@ -201,39 +205,52 @@ public class HomeController {
     }
 
 
-/*
-    @GetMapping("/search")
-    public String getSearch(){
+    @RequestMapping("/addlostitem")
+    public String addlostitem(Model model)
+    {
+        ReportItem reportItem  = new ReportItem();
+        //System.out.println ("addreportitem (request) = reportItem id / Name = " +  reportItem.getId() + " / " + reportItem.getItemName());
+        reportitemRepository.save(reportItem);
+
+        //System.out.println("addreportitem getname = " + auth.getName());
+        model.addAttribute("reportitem", reportItem);
+        return "addlostitem";
+    }
+
+    @PostMapping("/addlostitem")
+    public String addlostitem(@Valid @ModelAttribute("reportitem") ReportItem reportItem, BindingResult result, Model model)
+    {
+        //System.out.println ("addreportitem (post) = reportItem id / Name = " +  reportItem.getId() + " / " + reportItem.getItemName());
+        if(result.hasErrors())
+        {
+            return "addlostitem";
+        }
+
+        reportItem.setItemStatus("lost");
+        reportitemRepository.save(reportItem);
+        model.addAttribute("reportlist",reportitemRepository.findAll());
+
+        return "redirect:/";
+    }
+
+    @RequestMapping("/searchitem")
+    public String searchItem(HttpServletRequest request, @ModelAttribute("reportitem") ReportItem reportItem,BindingResult result,Model model)
+    {
+
         return "searchform";
     }
 
+    @PostMapping("/searchitem")
+    public String searchItem(HttpServletRequest request, Model model){
 
-    @PostMapping("/search")
-    public String searchpledgeditem(HttpServletRequest request, Model model)
-    {
-        String searchItems = request.getParameter(("search");
-        model.addAttribute("search", )
-
-        model.addAttribute("pledgeditems",pledgeditemRepository.findAllByItemName());
-
-
-        return "searchpledgeditem";
+        String searchString1 = request.getParameter("itemtype");
+        String searchString2 = request.getParameter("itemname");
+        System.out.println("searchString1 is " + searchString1);
+        System.out.println("searchString2 is " + searchString2);
+        model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemTypeAndItemName(searchString1, searchString2));
+        return "listitem";
     }
 
 
-
-
-    @PostMapping("/search")
-    public String showSearchResults(HttpServletRequest request, Model model){
-        String searchProducts = request.getParameter("search");
-        model.addAttribute("search",searchProducts);
-//
-
-//        Expecting multiple parameters or else will throw No parameter available Need to pass as many as are in constructor in Entity.
-        model.addAttribute("productsearch",productRepository.findAllByProductNameContainingIgnoreCase(searchProducts));
-//
-        return "searchproductlist";
-    }
-*/
 
 }
