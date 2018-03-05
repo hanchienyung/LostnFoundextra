@@ -22,7 +22,7 @@
     </tr>
     <tr th:each="reportitem : ${reportitems}">
         <td data-th="Item Name" th:text="${reportitem.itemName}"></td>
-        <td><img th:src="(${reportitem.image}==null)?'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png':${reportitem.image}"/></td>
+        <td><img th:src="(${reportitem.image}==null or ${reportitem.image.isEmpty()})?'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png':${reportitem.image}"/></td>
         <td data-th="Item Type" th:text="${reportitem.itemType}"></td>
         <td data-th="Item Description" th:text="${reportitem.itemDesc}"></td>
         <td data-th="Item Status" th:text="${reportitem.itemStatus}" ></td>
