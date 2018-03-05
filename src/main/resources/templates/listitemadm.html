@@ -2,10 +2,13 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <th:block th:replace="fragment::top"></th:block>
 <head>
+    <meta charset="UTF-8"/>
     <div th:replace="fragment :: top"></div>
     <link rel="stylesheet" href="./css/styles.css"/>
 </head>
 <body>
+<div th:replace="fragment :: navlinks"></div>
+<h1>List of Items</h1>
 <table class="table" >
     <tr>
         <th>Item Name</th>
@@ -16,9 +19,6 @@
         <th>Update Status</th>
         <th>Add User</th>
         <th>Reported By</th>
-
-
-
     </tr>
     <tr th:each="reportitem : ${reportitems}">
         <td data-th="Item Name" th:text="${reportitem.itemName}"></td>
@@ -40,7 +40,6 @@
 
         </td>
     </tr>
-
 </table>
 <section>
     <span th:replace="fragment::bootstrap4js"></span>

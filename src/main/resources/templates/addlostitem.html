@@ -9,7 +9,8 @@
 <body>
 
 
-<div th:replace="fragment :: navbar"></div>
+<!--<div th:replace="fragment :: navbar"></div> -->
+<div th:replace="fragment :: navlinks"></div>
 
 <div class="body-content">
     <div class="col-sm">
@@ -42,7 +43,7 @@
 
             <label >Item Image</label>
             <span th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></span>
-            <input type="text" placeholder="Item Image" class="form-control" th:field="*{image}">
+            <input type="url" placeholder="Item Image" class="form-control" th:field="*{image}">
 
             <button type="submit" class="btn btn-default">Save</button>
 

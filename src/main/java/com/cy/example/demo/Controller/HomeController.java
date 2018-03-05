@@ -31,6 +31,11 @@ public class HomeController {
         return "mainpage";
     }
 
+    @RequestMapping("/mainpage")
+    public String gotomainpage(Model model){
+        return "mainpage";
+    }
+
     @RequestMapping("/login")
     public String login(Model model)
     {
@@ -93,7 +98,7 @@ public class HomeController {
             return "registration";
         }
 
-        if(request.getParameter("isAdmin")!=null) // where does that come from
+        if(request.getParameter("isAdmin")!=null)
             user.addRole(roleRepository.findAppRoleByRoleName("ADMIN"));
         else
             user.addRole(roleRepository.findAppRoleByRoleName("USER"));
@@ -244,7 +249,7 @@ public class HomeController {
         String searchString2 = request.getParameter("itemname");
        // System.out.println("searchString1 is " + searchString1);
        // System.out.println("searchString2 is " + searchString2);
-        model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemTypeAndItemName(searchString1, searchString2));
+        model.addAttribute("reportitems",reportitemRepository.findReportItemsByItemTypeAndItemNameContains(searchString1, searchString2));
         return "listitem";
     }
 

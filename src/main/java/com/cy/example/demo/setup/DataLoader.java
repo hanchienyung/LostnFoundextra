@@ -35,7 +35,7 @@ public class DataLoader implements CommandLineRunner {
         // Add user roles
         AppUser user1 = new AppUser("burgerb", "password", "Bobby",  "Burger", "bob@burger.com");
         user1.addRole(myUserRole);
-       // appuserRepository.save(user1);
+        appuserRepository.save(user1);
 
         AppUser user2 = new AppUser("virginj", "password", "Jane", "Virgin", "jane@virgin.com");
         user2.addRole(myUserRole);
@@ -63,8 +63,8 @@ public class DataLoader implements CommandLineRunner {
         reportitem1.addUsertoReport(appuserRepository.findAppUserByUsername("virginj"));
         reportItemRepository.save(reportitem1);
 
-     //   user1.addReportItem(reportitem1);
-     //   appuserRepository.save(user1);
+       // user1.addReportItem(reportitem1);
+       // appuserRepository.save(user1);
 
         ReportItem reportitem2 = new ReportItem();
         reportitem2.setItemName("shorts");
@@ -74,8 +74,8 @@ public class DataLoader implements CommandLineRunner {
         reportitem2.addUsertoReport(appuserRepository.findAppUserByUsername("smithm"));
         reportItemRepository.save(reportitem2);
 
-    //    user2.addReportItem(reportitem2);
-    //    appuserRepository.save(user2);
+      //  user2.addReportItem(reportitem2);
+      //  appuserRepository.save(user2);
 
 
         ReportItem reportitem3 = new ReportItem();
@@ -87,8 +87,8 @@ public class DataLoader implements CommandLineRunner {
         reportitem3.addUsertoReport(appuserRepository.findAppUserByUsername("williamsr"));
         reportItemRepository.save(reportitem3);
 
-     //   user3.addReportItem(reportitem3);
-     //   appuserRepository.save(user3);
+      //  user3.addReportItem(reportitem3);
+      //  appuserRepository.save(user3);
 
         ReportItem reportitem4 = new ReportItem();
         reportitem4.setItemName("watch");
@@ -98,8 +98,8 @@ public class DataLoader implements CommandLineRunner {
         reportitem4.addUsertoReport(appuserRepository.findAppUserByUsername("blackl"));
         reportItemRepository.save(reportitem4);
 
-       // user4.addReportItem(reportitem4);
-      //  appuserRepository.save(user4);
+     //   user4.addReportItem(reportitem4);
+     //   appuserRepository.save(user4);
 
     }
 }

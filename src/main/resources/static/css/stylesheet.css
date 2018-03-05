@@ -67,4 +67,14 @@ img {
     background-color: deepskyblue;
 }
 
+.body-content{
+    position:relative;
+    top:20px;
+    height:700px;
+    width:800px;
+    margin-left:auto;
+    margin-right:auto;
+    background: transparent;
+}
+
 

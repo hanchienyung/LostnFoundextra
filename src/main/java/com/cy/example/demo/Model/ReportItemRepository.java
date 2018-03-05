@@ -11,6 +11,8 @@ public interface ReportItemRepository extends CrudRepository<ReportItem, Long> {
     HashSet<ReportItem> findReportItemsByItemStatus(String itemstatus);
     HashSet<ReportItem> findReportItemsByUsersInAndItemStatus(AppUser appuser, String itemstatus);
     HashSet<ReportItem> findReportItemsById(Long id);
-    HashSet<ReportItem> findReportItemsByItemTypeAndItemName(String itemtype, String itemname);
+    HashSet<ReportItem> findReportItemsByItemTypeAndItemNameContains(String itemtype, String itemname);
     HashSet<ReportItem> findReportItemsByItemTypeAndItemStatus(String itemtype, String itemstatus);
 }
+
+
